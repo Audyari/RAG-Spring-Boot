@@ -1,0 +1,4 @@
+Ini adalah dokumen contoh untuk RAG dengan Spring Boot.
+Kita akan memproses file ini menjadi teks bersih.
+Selanjutnya akan dipotong menjadi chunk-chunk kecil.
+Dan akhirnya disimpan di vector database.
