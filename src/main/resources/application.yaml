@@ -1,3 +1,9 @@
 spring:
   application:
     name: RAG-Spring-Boot
+  security:
+    user:
+      name: admin
+      password: admin
+server:
+  port: 8080
