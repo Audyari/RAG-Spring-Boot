@@ -21,8 +21,11 @@ public class SecurityConfig {
             .anyRequest().authenticated()
             )
             .formLogin(form -> form
-            .defaultSuccessUrl("/")
+            .defaultSuccessUrl("/",true)
             .permitAll()
+            )
+            .httpBasic(basic -> basic 
+                .realmName("rag_spring_boot")   
             );
         return http.build();
     }
@@ -31,7 +34,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
             .username("admin")
-            .password("admin")
+            .password("{noop}admin")
             .roles("USER")
             .build();
         return new InMemoryUserDetailsManager(user);
