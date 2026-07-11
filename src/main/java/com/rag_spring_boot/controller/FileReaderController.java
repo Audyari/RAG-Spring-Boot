@@ -4,6 +4,7 @@ import com.rag_spring_boot.service.FileReaderService;
 import com.rag_spring_boot.service.ChunkingService; 
 import com.rag_spring_boot.service.MetadataService;
 import com.rag_spring_boot.service.VectorStoreService;
+import com.rag_spring_boot.service.RouterService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,13 +13,30 @@ import java.util.Map;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.HashMap;
 
 @RestController
 public class FileReaderController {
-    private final FileReaderService fileReaderService = new FileReaderService();
-    private final ChunkingService chunkingService = new ChunkingService();
-    private final MetadataService metadataService = new MetadataService();
-    private final VectorStoreService vectorStoreService = new VectorStoreService();
+    
+    private final FileReaderService fileReaderService;
+    private final ChunkingService chunkingService;
+    private final MetadataService metadataService;
+    private final VectorStoreService vectorStoreService;
+    private final RouterService routerService;
+
+    public FileReaderController(FileReaderService fileReaderService,
+                                ChunkingService chunkingService,
+                                MetadataService metadataService,
+                                VectorStoreService vectorStoreService,
+                                RouterService routerService) {
+        
+        this.fileReaderService = fileReaderService;
+        this.chunkingService = chunkingService;
+        this.metadataService = metadataService;
+        this.vectorStoreService = vectorStoreService;
+        this.routerService = routerService;
+    }
 
     @GetMapping("/baca")
     public String baca() throws Exception {
@@ -86,5 +104,27 @@ public class FileReaderController {
      public String deleteAll(){
         vectorStoreService.deleteAll();
         return "Semua data dihapus!";
+    }
+
+    @GetMapping("/ask")
+    public Map<String, Object> ask(@RequestParam String q) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("query", q);
+        response.put("route", routerService.route(q));
+        response.put("timestamp", System.currentTimeMillis());
+
+        String route = routerService.route(q);
+
+        if (route.equals("greeting")) {
+            response.put("message", "Halo! Ada yang bisa saya bantu? 😊");
+        } else if (route.equals("calculator")) {
+            response.put("message", "Saya bisa membantu perhitungan! 🔢");
+        } else if (route.equals("rag")) {
+            response.put("message", "🔍 Saya akan mencari di database RAG...");
+        } else {
+            response.put("message", "Saya akan mencari tahu... 🤔");
+    }
+
+        return response;
     }
 }
