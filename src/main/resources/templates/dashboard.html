@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -216,13 +217,28 @@
             <div class="api-item">
                 <span class="method">GET</span>
                 <a href="/search?q=RAG">/search?q=...</a>
-                <div class="desc">🔎 Search query</div>
+                <div class="desc">🔎 Search query (Layer 5)</div>
             </div>
             <div class="api-item">
                 <span class="method">GET</span>
                 <a href="/ask?q=hai">/ask?q=...</a>
                 <div class="desc">🤖 Router / Orchestrator (Layer 6)</div>
-                </div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/ask?q=hack">/ask?q=hack</a>
+                <div class="desc">🛡️ Test unsafe query (Layer 7)</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/stats">/stats</a>
+                <div class="desc">📊 Evaluasi & Statistik (Layer 8)</div>
+            </div>
+            <div class="api-item">
+                <span class="method">DELETE</span>
+                <span style="color: #e74c3c;">/vectors</span>
+                <div class="desc">🗑️ Hapus semua data</div>
+            </div>
             <div class="api-item">
                 <span class="method">📖</span>
                 <a href="/swagger-ui/index.html">Swagger UI</a>
@@ -231,29 +247,41 @@
         </div>
     </div>
 
-    <!-- LAYER RAG -->
+    <!-- 8 LAYER RAG -->
     <div class="card">
-        <h2>🧠 5 Layer RAG</h2>
+        <h2>🧠 8 Layer RAG</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
-            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
                 <strong style="color: #667eea;">1</strong>
-                <div style="font-size: 12px; color: #555;">FileReader</div>
+                <div style="font-size: 12px; color: #555;">Ingestion ✅</div>
             </div>
-            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
                 <strong style="color: #667eea;">2</strong>
-                <div style="font-size: 12px; color: #555;">Chunking</div>
+                <div style="font-size: 12px; color: #555;">Chunking ✅</div>
             </div>
-            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
                 <strong style="color: #667eea;">3</strong>
-                <div style="font-size: 12px; color: #555;">Metadata</div>
+                <div style="font-size: 12px; color: #555;">Metadata ✅</div>
             </div>
-            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
                 <strong style="color: #667eea;">4</strong>
-                <div style="font-size: 12px; color: #555;">Vector Store</div>
+                <div style="font-size: 12px; color: #555;">Vector Store ✅</div>
             </div>
-            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
                 <strong style="color: #667eea;">5</strong>
-                <div style="font-size: 12px; color: #555;">Retrieval</div>
+                <div style="font-size: 12px; color: #555;">Retrieval ✅</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
+                <strong style="color: #667eea;">6</strong>
+                <div style="font-size: 12px; color: #555;">Orchestrator ✅</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
+                <strong style="color: #667eea;">7</strong>
+                <div style="font-size: 12px; color: #555;">Safety ✅</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; border-left: 4px solid #4CAF50;">
+                <strong style="color: #667eea;">8</strong>
+                <div style="font-size: 12px; color: #555;">Evaluation ✅</div>
             </div>
         </div>
     </div>
@@ -278,3 +306,4 @@
 
 </body>
 </html>
+

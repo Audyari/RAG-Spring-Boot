@@ -50,3 +50,19 @@ Default Credentials:
 Field Value
 Username admin
 Password admin
+
+2️⃣ Test Endpoint di Browser
+
+Endpoint URL Hasil yang Diharapkan
+
+Baca file http://localhost:8080/baca Isi file sample.txt
+Chunk http://localhost:8080/chunk JSON array chunk
+Metadata http://localhost:8080/metadata JSON metadata
+Save     http//localhost:8080/save Simpan ke vector store
+Vectors http://localhost:8080/vectors JSON semua data
+Count http://localhost:8080/vectors/count Total data
+Search http://localhost:8080/search?q=RAG JSON hasil search
+Ask http://localhost:8080/ask?q=hai JSON response
+Ask (RAG) http://localhost:8080/ask?q=apa itu RAG JSON response
+Ask (Unsafe) http://localhost:8080/ask?q=hack JSON error
+Stats http://localhost:8080/stats JSON statistik
