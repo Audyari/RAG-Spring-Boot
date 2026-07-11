@@ -47,13 +47,24 @@ public class FileReaderController {
 
     @GetMapping("/save")
     public Map<Long, Map<String, Object>> save() throws Exception {
+         
+        // Kalau udah ada data, langsung balikin (jangan save ulang)
+        if (vectorStoreService.count() > 0) {
+            System.out.println("⚠️ Data sudah ada, skip save!");
+            return vectorStoreService.findAll();
+        }
+    
+        System.out.println("💾 Menyimpan data...");
         String text = fileReaderService.readFile("documents/sample.txt");
-        List<String> chunks= chunkingService.chunkText(text, 5);
+        List<String> chunks = chunkingService.chunkText(text, 5);
+        
         for (String chunk : chunks) {
             Map<String, Object> metadata = metadataService.createMetadata(chunk, "sample.txt");
-            vectorStoreService.save(chunk,  metadata);
+            vectorStoreService.save(chunk, metadata);
         }
-        return  vectorStoreService.findAll();
+    
+        System.out.println("✅ Selesai menyimpan " + vectorStoreService.count() + " data!");
+        return vectorStoreService.findAll();    
     }
 
     @GetMapping("/vectors")
