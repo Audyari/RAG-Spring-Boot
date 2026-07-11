@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .header .version {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .api-item {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: 0.3s;
+        }
+
+        .api-item:hover {
+            background: #eef0ff;
+            transform: translateX(5px);
+        }
+
+        .api-item .method {
+            font-size: 11px;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+        }
+
+        .api-item a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .api-item a:hover {
+            color: #667eea;
+        }
+
+        .api-item .desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .status.online {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .footer {
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .logout-btn {
+            color: white;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h1>🚀 RAG Spring Boot</h1>
+            <span class="status online">● Online</span>
+        </div>
+        <div>
+            <span class="version">v1.0.0</span>
+            <a href="/logout" class="logout-btn">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="card">
+        <h2>📊 Status Sistem</h2>
+        <p style="color: #555; margin-bottom: 8px;">
+            ✅ Aplikasi RAG berjalan dengan baik.
+        </p>
+        <p style="color: #888; font-size: 14px;">
+            Total data tersimpan: <strong id="totalData">...</strong>
+        </p>
+    </div>
+
+    <!-- API ENDPOINT -->
+    <div class="card">
+        <h2>📡 API Endpoint</h2>
+        <div class="api-grid">
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/baca">/baca</a>
+                <div class="desc">📄 Baca file sample</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/chunk">/chunk</a>
+                <div class="desc">✂️ Lihat hasil chunking</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/metadata">/metadata</a>
+                <div class="desc">🏷️ Lihat metadata</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/save">/save</a>
+                <div class="desc">💾 Simpan ke vector store</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/vectors">/vectors</a>
+                <div class="desc">📊 Lihat semua data</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/vectors/count">/vectors/count</a>
+                <div class="desc">🔢 Hitung jumlah data</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/vectors/1">/vectors/{id}</a>
+                <div class="desc">🔍 Cari data by ID</div>
+            </div>
+            <div class="api-item">
+                <span class="method">GET</span>
+                <a href="/search?q=RAG">/search?q=...</a>
+                <div class="desc">🔎 Search query</div>
+            </div>
+            <div class="api-item">
+                <span class="method">📖</span>
+                <a href="/swagger-ui/index.html">Swagger UI</a>
+                <div class="desc">Dokumentasi API</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAYER RAG -->
+    <div class="card">
+        <h2>🧠 5 Layer RAG</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+                <strong style="color: #667eea;">1</strong>
+                <div style="font-size: 12px; color: #555;">FileReader</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+                <strong style="color: #667eea;">2</strong>
+                <div style="font-size: 12px; color: #555;">Chunking</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+                <strong style="color: #667eea;">3</strong>
+                <div style="font-size: 12px; color: #555;">Metadata</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+                <strong style="color: #667eea;">4</strong>
+                <div style="font-size: 12px; color: #555;">Vector Store</div>
+            </div>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center;">
+                <strong style="color: #667eea;">5</strong>
+                <div style="font-size: 12px; color: #555;">Retrieval</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        RAG Spring Boot v1.0.0 &copy; 2026
+    </div>
+</div>
+
+<script>
+    // Ambil total data dari API /vectors/count
+    fetch('/vectors/count')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('totalData').textContent = data;
+        })
+        .catch(() => {
+            document.getElementById('totalData').textContent = '0 (belum ada data)';
+        });
+</script>
+
+</body>
+</html>

@@ -10,26 +10,26 @@ public class VectorStoreService {
     private final Map<Long, Map<String, Object>> store = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
-    public Long save(String text, Map<String, Object> metadata){
+    public Long save(String text, Map<String, Object> metadata) {
         Long id = idGenerator.getAndIncrement();
         Map<String, Object> entry = new HashMap<>();
-        entry.put("text",text);
-        entry.put("metadata",metadata);
+        entry.put("text", text);
+        entry.put("metadata", metadata);
         entry.put("vector", generateDummyVector(text));
         store.put(id, entry);
-        System.out.println("✅ Tersimpan ID: " + id + " | Text: " + text);   
+        System.out.println("✅ Tersimpan ID: " + id + " | Text: " + text);
         return id;
     }
 
-    private List<Double> generateDummyVector(String text)   {
+    private List<Double> generateDummyVector(String text) {
         List<Double> vector = new ArrayList<>();
-        for (char c : text.toCharArray()){
-            vector.add((double)c);
-        }    
+        for (char c : text.toCharArray()) {
+            vector.add((double) c);
+        }
         return vector;
     }
 
-    public Map<Long, Map <String,Object>> findAll(){
+    public Map<Long, Map<String, Object>> findAll() {
         return store;
     }
 
@@ -39,12 +39,11 @@ public class VectorStoreService {
 
     public int count() {
         return store.size();
-
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         store.clear();
         idGenerator.set(1);
-        System.out.println("🗑️ Semua data dihapus!");  
+        System.out.println("🗑️ Semua data dihapus!");
     }
 }
