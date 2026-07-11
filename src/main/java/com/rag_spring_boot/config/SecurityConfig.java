@@ -26,6 +26,9 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/", true)
                 .permitAll()
             )
+            .httpBasic(basic -> basic   
+                .realmName("RAG-Spring-Boot")
+            )
             .csrf(csrf -> csrf.disable());
         return http.build();
     }
